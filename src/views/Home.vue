@@ -1,18 +1,96 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-for="(ass, i) in assignatures" :key="i">
+      <p>
+        {{ ass.name }} _{{ calculateFinalGrade(ass.items).final }} =
+        {{ calculateFinalGrade(ass.items).letter }}_
+      </p>
+      <div v-for="(item, i) in ass.items" :key="i">
+        - {{ item.name }} | {{ item.percentage }} -
+        {{ calculatePercentageValue(item.grades, item.percentage) }} |
+        <span v-for="(grade, i) in item.grades" :key="i">[ {{ grade }} ]</span>
+      </div>
+    </div>
+
+    <img alt="Vue logo" src="../assets/logo.png" />
+    <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from "@/components/HelloWorld.vue";
 
 export default {
-  name: 'Home',
+  data() {
+    return {
+      assignatures: [
+        {
+          owner: "djahsvkdkajs12y8",
+          name: "Math",
+          status: "on-course",
+          items: [
+            {
+              name: "tests",
+              percentage: 0.5,
+              grades: [100, 90, 45],
+            },
+            {
+              name: "homeworks",
+              percentage: 0.5,
+              grades: [73],
+            },
+          ],
+        },
+        {
+          owner: "djahsvkdkajs12y8",
+          name: "science",
+          status: "on-course",
+          items: [
+            {
+              name: "tests",
+              percentage: 0.5,
+              grades: [10, 90, 45],
+            },
+            {
+              name: "homeworks",
+              percentage: 0.5,
+              grades: [73],
+            },
+          ],
+        },
+      ],
+    };
+  },
+  name: "Home",
+  methods: {
+    calculatePercentageValue(grades, perc) {
+      let sum = 0;
+      grades.forEach((grade) => {
+        sum += grade;
+      });
+      return ((sum / grades.length) * perc).toFixed(2);
+    },
+    calculateFinalGrade(items) {
+      let finalGrade = 0;
+      items.forEach((ass) => {
+        finalGrade += parseFloat(
+          this.calculatePercentageValue(ass.grades, ass.percentage)
+        );
+      });
+      return {
+        final: finalGrade,
+        letter: this.returnGradeInLetter(finalGrade),
+      };
+    },
+    returnGradeInLetter(grade) {
+      if (grade > 65) return "A";
+      else return "F";
+    },
+  },
+  mounted() {},
   components: {
-    HelloWorld
-  }
-}
+    HelloWorld,
+  },
+};
 </script>
