@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <q-page class="q-pa-md">
     <div v-for="(ass, i) in assignatures" :key="i">
       <p>
         {{ ass.name }} _{{ calculateFinalGrade(ass.items).final }} =
@@ -11,16 +11,10 @@
         <span v-for="(grade, i) in item.grades" :key="i">[ {{ grade }} ]</span>
       </div>
     </div>
-
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  </q-page>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
-
 export default {
   data() {
     return {
@@ -62,7 +56,6 @@ export default {
       ],
     };
   },
-  name: "Home",
   methods: {
     calculatePercentageValue(grades, perc) {
       let sum = 0;
@@ -87,10 +80,6 @@ export default {
       if (grade > 65) return "A";
       else return "F";
     },
-  },
-  mounted() {},
-  components: {
-    HelloWorld,
   },
 };
 </script>
