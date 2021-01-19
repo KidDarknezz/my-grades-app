@@ -11,6 +11,9 @@
         <span v-for="(grade, i) in item.grades" :key="i">[ {{ grade }} ]</span>
       </div>
     </div>
+    <button @click="pushToArray()">test</button>
+
+    <img alt="Vue logo" src="../assets/logo.png" />
   </q-page>
 </template>
 
@@ -32,7 +35,7 @@ export default {
             {
               name: "homeworks",
               percentage: 0.5,
-              grades: [73],
+              grades: [90],
             },
           ],
         },
@@ -77,8 +80,15 @@ export default {
       };
     },
     returnGradeInLetter(grade) {
-      if (grade > 65) return "A";
+      if (grade > 90) return "A";
+      if (grade >= 81 && grade < 91) return "B";
+      if (grade >= 71 && grade < 81) return "C";
+      if (grade >= 61 && grade < 71) return "D";
+      if (grade > 0 && grade < 61) return "F";
       else return "F";
+    },
+    pushToArray() {
+      this.assignatures[0].items[0].grades.push(89);
     },
   },
 };
